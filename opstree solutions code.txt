@@ -1,0 +1,80 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+class LinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def append(self, data):
+        if not self.head:
+            self.head = Node(data)
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = Node(data)
+    def print_list(self):
+        current = self.head
+        while current:
+            print(current.data, end = " -> ")
+            current = current.next
+        print("None")
+    
+    def to_int(self):
+        current , num = self.head,0
+        while current:
+            num = num*10+current.data
+            current = current.next
+        return num    
+    
+    @staticmethod
+    def from_int(num):
+        list_instance = LinkedList()
+        is_negative = num <0
+        num = abs(num)
+        for digit in str(num):
+            list_instance.append(int(digit))
+        if is_negative:
+            negative_node = Node('-')
+            negative_node.next = list_instance.head
+            list_instance.head = negative_node
+            
+            
+        return list_instance
+    
+    def add(self, other):
+        return LinkedList.from_int(self.to_int() + other.to_int())
+    
+    def subtract(self, other):
+        return LinkedList.from_int(self.to_int() - other.to_int())
+    
+    def multiply(self, other):
+        return LinkedList.from_int(self.to_int() * other.to_int())
+
+num1 = LinkedList()
+num2 = LinkedList()
+
+for digit in [1,2,3]:
+    num1.append(digit)
+
+for digit in[4,5,6]:
+    num2.append(digit)
+
+print("Number 1:", end =" ")
+num1.print_list()
+
+print("Number 2:", end =" ")
+num1.print_list()
+
+sum_list = num1.add(num2)
+print("Sum:", end = " ")
+sum_list.print_list()
+
+diff_list = num1.subtract(num2)
+print("Difference:", end = " ")
+diff_list.print_list()
+
+prod_list = num1.multiply(num2)
+print("Product:", end = " ")
+prod_list.print_list()
